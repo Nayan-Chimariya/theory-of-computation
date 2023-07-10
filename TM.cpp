@@ -1,93 +1,108 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-int current = 0;
 
 int main()
 {
-  char inputstr[20], c;
-  int i = 0;
+  int current = 0;
+  char inputstr[20],i;
+
+  for(i=0; i<20; i++)
+      inputstr[i]='\0';
+
   printf("Enter input string: ");
-  fgets(inputstr, sizeof(inputstr), stdin);
+  gets(inputstr);
+
+  i=0;
   while (1)
   {
-    c = inputstr[i];
     switch (current)
     {
       case 0:
-        if (c == '0')
+        if (inputstr[i] == '0')
         {
-          inputstr[i] = 'X';
-          i++;
-          current = 1;
+            current = 1;
+            inputstr[i] = 'X';
+            i++;
         }
 
-        else if (c == 'Y')
+        else if (inputstr[i] == 'Y')
         {
-          i++;
           current = 3;
+          i++;
         }
 
         else
-        {
           current = -1;
-        }
+
         break;
 
       case 1:
-        if (c == '0')
+        if (inputstr[i] == '0')
         {
-          i++;
+            current = 1;
+            i++;
+        }
+
+        else if (inputstr[i] == 'Y')
+        {
           current = 1;
-        }
-        else if (c == 'Y')
-        {
           i++;
-          current = 1;
         }
-        else if (c == '1')
+
+        else if (inputstr[i] == '1')
         {
-          inputstr[i] = 'Y';
-          i--;
-          current = 2;
+            current = 2;
+            inputstr[i] = 'Y';
+            i--;
         }
+
+        else
+            current = -1;
+
         break;
 
       case 2:
-        if (c == '0')
+        if (inputstr[i] == '0')
         {
-          i--;
           current = 2;
-        }
-        else if (c == 'Y')
-        {
           i--;
-          current = 2;
         }
-        else if (c == 'X')
+
+        else if (inputstr[i] == 'Y')
         {
-          i++;
+          current = 2;
+          i--;
+        }
+
+        else if (inputstr[i] == 'X')
+        {
           current = 0;
+          i++;
         }
+
         else
           current = -1;
+
         break;
 
       case 3:
-        if (c == 'Y')
+        if (inputstr[i] == 'Y')
         {
-          i++;
-          current = 3;
+            current = 3;
+            i++;
         }
-        else if (c == '\0')
+
+        else if (inputstr[i] == '\0')
         {
-          i++;
           current = 4;
         }
+
         else
           current = -1;
-        }
+
         break;
+    }
 
     if (current == -1 || current == 4)
       break;
